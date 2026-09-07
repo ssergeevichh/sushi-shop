@@ -1,51 +1,20 @@
 <script setup lang="ts">
+import { categories } from '~/data/categories'
+import { products } from '~/data/products'
+
 useSeoMeta({
-  title: 'ROLLIN’ Меню',
+  title: 'СУШІ ROLLIN’ ',
   description: 'Замовляйте свіжі роли та суші від ROLLIN’',
 })
 
-const categories = [
-  {
-    id: 'all',
-    name: 'Усі',
-    image: '/images/categories/all.webp',
-  },
-  {
-    id: 'sets',
-    name: 'Сети',
-    image: '/images/categories/sets.webp',
-  },
-  {
-    id: 'philadelphia',
-    name: 'Філадельфія',
-    image: '/images/categories/philadelphia.webp',
-  },
-  {
-    id: 'california',
-    name: 'Каліфорнія',
-    image: '/images/categories/california.webp',
-  },
-  {
-    id: 'baked',
-    name: 'Запечені',
-    image: '/images/categories/baked.webp',
-  },
-  {
-    id: 'tempura',
-    name: 'Темпура',
-    image: '/images/categories/tempura.webp',
-  },
-  {
-    id: 'maki',
-    name: 'Макі',
-    image: '/images/categories/maki.webp',
-  },
-  {
-    id: 'vegetarian',
-    name: 'Веган',
-    image: '/images/categories/vegetarian.webp',
-  },
-]
+const bestsellers = products.filter(product => product.labels.includes('bestseller'))
+
+const {
+  getQuantity,
+  increase,
+  decrease,
+  remove,
+} = useCart()
 </script>
 
 <template>
@@ -53,6 +22,23 @@ const categories = [
     <HeroBanner />
     <PromoBanner />
     <CategoryCarousel :categories="categories" />
+
+    <section class="bestsellers" aria-labelledby="bestsellers-title">
+      <h2 id="bestsellers-title">Хіти продажу</h2>
+
+      <div class="bestsellers__list">
+        <ProductCard
+          v-for="product in bestsellers"
+          :key="product.id"
+          :product="product"
+          :quantity="getQuantity(product.id)"
+          @add="increase"
+          @increase="increase"
+          @decrease="decrease"
+          @remove="remove"
+        />
+      </div>
+    </section>
   </main>
 </template>
 
@@ -64,5 +50,15 @@ const categories = [
 
   min-height: 100dvh;
   padding: 40px var(--page-padding) var(--page-padding);
+}
+
+.bestsellers {
+  display: grid;
+  gap: 12px;
+}
+
+.bestsellers__list {
+  display: grid;
+  gap: 16px;
 }
 </style>

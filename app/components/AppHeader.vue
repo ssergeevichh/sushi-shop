@@ -2,11 +2,17 @@
 const props = withDefaults(
   defineProps<{
     cartCount?: number
+    cartOpen?: boolean
   }>(),
   {
     cartCount: 0,
+    cartOpen: false,
   },
 )
+
+const emit = defineEmits<{
+  openCart: []
+}>()
 </script>
 
 <template>
@@ -76,6 +82,9 @@ const props = withDefaults(
           icon
           variant="flat"
           aria-label="Відкрити кошик"
+          aria-controls="mini-cart"
+          :aria-expanded="props.cartOpen"
+          @click="emit('openCart')"
         >
           <svg
             aria-hidden="true"

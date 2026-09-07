@@ -1,9 +1,5 @@
 <script setup lang="ts">
-interface Category {
-  id: string
-  name: string
-  image: string
-}
+import type { Category } from '~/types/category'
 
 const props = defineProps<{
   categories: Category[]
@@ -59,16 +55,19 @@ onBeforeUnmount(() => {
 })
 
 function getCategoryLink(categoryId: string) {
-  return {
-    path: '/',
-    query: {
-      category: categoryId,
-    },
+  if (categoryId === 'all') {
+    return '/menu'
   }
+
+  return `/categories/${categoryId}`
 }
 
 function isActiveCategory(categoryId: string) {
-  return route.query.category === categoryId
+  if (categoryId === 'all') {
+    return route.path === '/menu'
+  }
+
+  return route.path === `/categories/${categoryId}`
 }
 </script>
 

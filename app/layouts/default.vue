@@ -1,8 +1,27 @@
+<script setup lang="ts">
+const route = useRoute()
+const { totalItems } = useCart()
+
+const hasStickyPurchase = computed(() => route.path.startsWith('/products/'))
+const isMiniCartOpen = ref(false)
+</script>
+
 <template>
   <div class="shop-layout">
-    <AppHeader :cart-count="3" />
+    <AppHeader
+      :cart-count="totalItems"
+      :cart-open="isMiniCartOpen"
+      @open-cart="isMiniCartOpen = true"
+    />
+
+    <MiniCart v-model="isMiniCartOpen" />
+
     <slot />
-    <AppFooter />
+    <AppFooter
+      :class="{
+        'app-footer--with-sticky-purchase': hasStickyPurchase,
+      }"
+    />
   </div>
 </template>
 

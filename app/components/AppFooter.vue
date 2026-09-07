@@ -112,6 +112,10 @@ const currentYear = new Date().getFullYear()
   text-align: center;
 }
 
+.app-footer--with-sticky-purchase {
+  padding-bottom: calc(84px + env(safe-area-inset-bottom));
+}
+
 .footer-content {
   padding: 56px var(--page-padding) 0;
 }

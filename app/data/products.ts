@@ -1,0 +1,43 @@
+import type { Product } from '~/types/product'
+
+export const products: Product[] = [
+  {
+    id: 'philadelphia-classic',
+    slug: 'philadelphia-classic',
+    categoryId: 'philadelphia',
+    name: 'Філадельфія Класик',
+    description: 'Класичний рол із ніжним лососем та вершковим сиром.',
+    ingredients: ['Лосось', 'вершковий сир', 'огірок', 'авокадо', 'рис', 'норі'],
+    image: '/images/categories/philadelphia.webp',
+    price: 325,
+    weight: 320,
+    labels: ['bestseller'],
+    available: true,
+  },
+  {
+    id: 'california-salmon',
+    slug: 'california-salmon',
+    categoryId: 'california',
+    name: 'Каліфорнія з лососем',
+    description: 'Легкий рол із лососем, авокадо та ікрою тобіко.',
+    ingredients: ['Лосось', 'авокадо', 'огірок', 'ікра тобіко', 'рис', 'норі'],
+    image: '/images/categories/california.webp',
+    price: 295,
+    weight: 290,
+    labels: ['bestseller'],
+    available: true,
+  },
+  {
+    id: 'tempura-shrimp',
+    slug: 'tempura-shrimp',
+    categoryId: 'tempura',
+    name: 'Темпура з креветкою',
+    description: 'Хрусткий гарячий рол із тигровою креветкою.',
+    ingredients: ['Креветка', 'вершковий сир', 'авокадо', 'темпура', 'рис', 'норі'],
+    image: '/images/categories/tempura.webp',
+    price: 310,
+    weight: 300,
+    labels: ['bestseller'],
+    available: true,
+  },
+]
