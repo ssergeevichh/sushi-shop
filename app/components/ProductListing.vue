@@ -1,16 +1,15 @@
 <script setup lang="ts">
 import type { Product } from '~/types/product'
+import { getPositionsLabel } from '~/utils/formatters'
 
 const props = withDefaults(
   defineProps<{
     title: string
     description?: string
     products: Product[]
-    eyebrow?: string
   }>(),
   {
     description: '',
-    eyebrow: 'Меню ROLLIN’',
   },
 )
 
@@ -22,26 +21,6 @@ const {
 } = useCart()
 
 const viewMode = useProductViewMode()
-
-function getPositionsLabel(count: number) {
-  const lastTwoDigits = count % 100
-
-  if (lastTwoDigits >= 11 && lastTwoDigits <= 14) {
-    return 'позицій'
-  }
-
-  const lastDigit = count % 10
-
-  if (lastDigit === 1) {
-    return 'позиція'
-  }
-
-  if (lastDigit >= 2 && lastDigit <= 4) {
-    return 'позиції'
-  }
-
-  return 'позицій'
-}
 </script>
 
 <template>
@@ -55,22 +34,21 @@ function getPositionsLabel(count: number) {
     </NuxtLink>
 
     <header class="product-listing__header">
-      <span>{{ props.eyebrow }}</span>
-
-      <div class="product-listing__title-row">
-        <h1>{{ props.title }}</h1>
-        <ProductViewToggle v-if="props.products.length" v-model="viewMode" />
-      </div>
+      <h1>{{ props.title }}</h1>
 
       <p v-if="props.description">
         {{ props.description }}
       </p>
-
-      <small aria-live="polite">
-        Знайдено {{ props.products.length }}
-        {{ getPositionsLabel(props.products.length) }}
-      </small>
     </header>
+
+    <div v-if="props.products.length" class="product-listing__toolbar">
+      <p aria-live="polite">
+        Всього {{ props.products.length }}
+        {{ getPositionsLabel(props.products.length) }}
+      </p>
+
+      <ProductViewToggle v-model="viewMode" />
+    </div>
 
     <section
       v-if="props.products.length"
@@ -115,14 +93,14 @@ function getPositionsLabel(count: number) {
 <style scoped>
 .product-listing {
   min-height: 100dvh;
-  padding: 28px var(--page-padding) 40px;
+  padding: 20px var(--page-padding) 40px;
 }
 
 .product-listing__back {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin-bottom: 26px;
+  margin-bottom: 16px;
 
   color: var(--color-text-secondary);
   font-size: 14px;
@@ -151,23 +129,16 @@ function getPositionsLabel(count: number) {
 
 .product-listing__header {
   display: grid;
-  gap: 9px;
-  margin-bottom: 24px;
+  gap: 8px;
+  margin-bottom: 18px;
 }
 
-.product-listing__header > span {
-  color: var(--color-primary);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-}
-
-.product-listing__title-row {
+.product-listing__toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  margin-bottom: 16px;
 }
 
 .product-listing__header > p {
@@ -176,10 +147,10 @@ function getPositionsLabel(count: number) {
   line-height: 1.55;
 }
 
-.product-listing__header > small {
+.product-listing__toolbar p {
   color: var(--color-text-muted);
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .product-listing__grid {

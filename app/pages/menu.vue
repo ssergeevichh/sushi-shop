@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { categories } from '~/data/categories'
 import { products } from '~/data/products'
+import { getPositionsLabel } from '~/utils/formatters'
 
 const route = useRoute()
 const menuPage = ref<HTMLElement | null>(null)
@@ -22,28 +23,11 @@ const initialCategoryId = menuSections.some(({ category }) => category.id === ro
 
 const activeCategoryId = ref(initialCategoryId)
 const viewMode = useProductViewMode()
+const totalMenuItems = menuSections.reduce((total, section) => {
+  return total + section.products.length
+}, 0)
 
 let scrollFrame: number | undefined
-
-function getPositionsLabel(count: number) {
-  const lastTwoDigits = count % 100
-
-  if (lastTwoDigits >= 11 && lastTwoDigits <= 14) {
-    return 'позицій'
-  }
-
-  const lastDigit = count % 10
-
-  if (lastDigit === 1) {
-    return 'позиція'
-  }
-
-  if (lastDigit >= 2 && lastDigit <= 4) {
-    return 'позиції'
-  }
-
-  return 'позицій'
-}
 
 function centerActiveNavigationItem(categoryId: string) {
   const navigation = menuNavigation.value
@@ -135,10 +119,7 @@ useSeoMeta({
 <template>
   <main ref="menuPage" class="menu-page">
     <header class="menu-page__header">
-      <div class="menu-page__title-row">
-        <h1>Усе меню</h1>
-        <ProductViewToggle v-model="viewMode" />
-      </div>
+      <h1>Усе меню</h1>
       <p>Обирай улюблені роли та збирай своє замовлення.</p>
     </header>
 
@@ -168,6 +149,14 @@ useSeoMeta({
       </div>
     </nav>
 
+    <div class="menu-page__toolbar">
+      <p aria-live="polite">
+        Всього {{ totalMenuItems }} {{ getPositionsLabel(totalMenuItems) }}
+      </p>
+
+      <ProductViewToggle v-model="viewMode" />
+    </div>
+
     <div class="menu-page__sections">
       <section
         v-for="section in menuSections"
@@ -179,17 +168,10 @@ useSeoMeta({
         :aria-labelledby="`${section.category.id}-title`"
       >
         <header class="menu-section__header">
-          <div>
-            <h2 :id="`${section.category.id}-title`">
-              {{ section.category.name }}
-            </h2>
-            <p>{{ section.category.description }}</p>
-          </div>
-
-          <small>
-            {{ section.products.length }}
-            {{ getPositionsLabel(section.products.length) }}
-          </small>
+          <h2 :id="`${section.category.id}-title`">
+            {{ section.category.name }}
+          </h2>
+          <p>{{ section.category.description }}</p>
         </header>
 
         <div class="menu-section__products">
@@ -228,11 +210,18 @@ useSeoMeta({
   line-height: 1.5;
 }
 
-.menu-page__title-row {
+.menu-page__toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  padding: 18px var(--page-padding) 0;
+}
+
+.menu-page__toolbar p {
+  color: var(--color-text-muted);
+  font-size: 12px;
+  font-weight: 700;
 }
 
 .menu-page__quick-navigation {
@@ -302,7 +291,7 @@ useSeoMeta({
 .menu-page__sections {
   display: grid;
   gap: 38px;
-  padding: 28px var(--page-padding) 0;
+  padding: 22px var(--page-padding) 0;
 }
 
 .menu-section {
@@ -312,10 +301,7 @@ useSeoMeta({
 }
 
 .menu-section__header {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 14px;
-  align-items: end;
+  display: block;
 }
 
 .menu-section__header p {
@@ -323,14 +309,6 @@ useSeoMeta({
   color: var(--color-text-secondary);
   font-size: 13px;
   line-height: 1.45;
-}
-
-.menu-section__header small {
-  padding-bottom: 2px;
-  color: var(--color-text-muted);
-  font-size: 11px;
-  font-weight: 600;
-  white-space: nowrap;
 }
 
 .menu-section__products {
@@ -341,18 +319,10 @@ useSeoMeta({
 @media (max-width: 359px) {
   .menu-page__header,
   .menu-page__quick-navigation,
+  .menu-page__toolbar,
   .menu-page__sections {
     padding-right: 14px;
     padding-left: 14px;
-  }
-
-  .menu-section__header {
-    grid-template-columns: 1fr;
-    gap: 6px;
-  }
-
-  .menu-section__header small {
-    padding-bottom: 0;
   }
 }
 

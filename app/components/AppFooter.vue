@@ -116,6 +116,10 @@ const currentYear = new Date().getFullYear()
   padding-bottom: calc(84px + env(safe-area-inset-bottom));
 }
 
+.app-footer--with-sticky-cart-checkout {
+  padding-bottom: calc(92px + env(safe-area-inset-bottom));
+}
+
 .footer-content {
   padding: 56px var(--page-padding) 0;
 }

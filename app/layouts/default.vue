@@ -3,6 +3,7 @@ const route = useRoute()
 const { totalItems } = useCart()
 
 const hasStickyPurchase = computed(() => route.path.startsWith('/products/'))
+const hasStickyCartCheckout = computed(() => route.path === '/cart' && totalItems.value > 0)
 const isMiniCartOpen = ref(false)
 </script>
 
@@ -20,6 +21,7 @@ const isMiniCartOpen = ref(false)
     <AppFooter
       :class="{
         'app-footer--with-sticky-purchase': hasStickyPurchase,
+        'app-footer--with-sticky-cart-checkout': hasStickyCartCheckout,
       }"
     />
   </div>

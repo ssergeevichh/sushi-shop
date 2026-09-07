@@ -3,7 +3,7 @@ import { categories } from '~/data/categories'
 import { products } from '~/data/products'
 
 useSeoMeta({
-  title: 'СУШІ ROLLIN’ ',
+  title: 'СУШІ ROLLIN’',
   description: 'Замовляйте свіжі роли та суші від ROLLIN’',
 })
 
@@ -20,8 +20,8 @@ const {
 <template>
   <main class="catalog-page">
     <HeroBanner />
-    <PromoBanner />
     <CategoryCarousel :categories="categories" />
+    <PromoBanner />
 
     <section class="bestsellers" aria-labelledby="bestsellers-title">
       <h2 id="bestsellers-title">Хіти продажу</h2>

@@ -36,6 +36,5 @@ useSeoMeta({
     :title="category.name"
     :description="category.description"
     :products="categoryProducts"
-    eyebrow="Категорія"
   />
 </template>

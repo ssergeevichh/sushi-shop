@@ -60,6 +60,10 @@ button {
   cursor: pointer;
 }
 
+.v-btn.bg-primary {
+  color: white;
+}
+
 img,
 svg {
   display: block;
