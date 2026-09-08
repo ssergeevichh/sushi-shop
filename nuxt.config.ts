@@ -58,6 +58,14 @@ export default defineNuxtConfig({
           content: 'Свіжі роли та суші від ROLLIN’',
         },
       ],
+
+      link: [
+        {
+          rel: 'icon',
+          type: 'image/png',
+          href: '/favicon.png',
+        },
+      ],
     },
   },
 })

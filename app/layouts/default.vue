@@ -3,8 +3,19 @@ const route = useRoute()
 const { totalItems } = useCart()
 
 const hasStickyPurchase = computed(() => route.path.startsWith('/products/'))
-const hasStickyCartCheckout = computed(() => route.path === '/cart' && totalItems.value > 0)
 const isMiniCartOpen = ref(false)
+const isNavigationOpen = ref(false)
+const isDeliveryDialogOpen = ref(false)
+
+function openCart() {
+  isNavigationOpen.value = false
+  isMiniCartOpen.value = !isMiniCartOpen.value
+}
+
+function openNavigation() {
+  isMiniCartOpen.value = false
+  isNavigationOpen.value = !isNavigationOpen.value
+}
 </script>
 
 <template>
@@ -12,17 +23,26 @@ const isMiniCartOpen = ref(false)
     <AppHeader
       :cart-count="totalItems"
       :cart-open="isMiniCartOpen"
-      @open-cart="isMiniCartOpen = true"
+      :menu-open="isNavigationOpen"
+      @open-cart="openCart"
+      @open-menu="openNavigation"
     />
 
+    <AppNavigation
+      v-model="isNavigationOpen"
+      @open-delivery="isDeliveryDialogOpen = true"
+    />
     <MiniCart v-model="isMiniCartOpen" />
+    <DeliveryDialog v-model="isDeliveryDialogOpen" />
+
+    <AppBreadcrumbs />
 
     <slot />
     <AppFooter
       :class="{
         'app-footer--with-sticky-purchase': hasStickyPurchase,
-        'app-footer--with-sticky-cart-checkout': hasStickyCartCheckout,
       }"
+      @open-delivery="isDeliveryDialogOpen = true"
     />
   </div>
 </template>

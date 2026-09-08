@@ -201,7 +201,7 @@ useSeoMeta({
 .menu-page__header {
   display: grid;
   gap: 8px;
-  padding: 32px var(--page-padding) 24px;
+  padding: 24px var(--page-padding);
 }
 
 .menu-page__header p {

@@ -27,9 +27,9 @@
         Обирай улюблені смаки та збирай своє ідеальне замовлення.
       </p>
 
-      <a
+      <NuxtLink
         class="hero-banner__action"
-        href="#categories"
+        to="/menu"
       >
         До меню
 
@@ -39,7 +39,7 @@
         >
           <path d="M5 12h14M13 6l6 6-6 6" />
         </svg>
-      </a>
+      </NuxtLink>
     </div>
   </section>
 </template>
@@ -83,11 +83,14 @@
 
 .hero-banner__content {
   position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
 
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
   padding: 22px;
+  text-align: left;
 }
 
 .hero-banner__eyebrow {

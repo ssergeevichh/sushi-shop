@@ -27,6 +27,23 @@ const shouldShowStickyCheckout = computed(() => {
 
 let checkoutObserver: IntersectionObserver | undefined
 
+function updateCheckoutActionVisibility(element = checkoutAction.value) {
+  if (!element) {
+    hasCheckoutPosition.value = false
+    return
+  }
+
+  const rect = element.getBoundingClientRect()
+  const viewportHeight = window.innerHeight || document.documentElement.clientHeight
+
+  isCheckoutActionVisible.value = rect.top < viewportHeight && rect.bottom > 0
+  hasCheckoutPosition.value = true
+}
+
+function handleViewportResize() {
+  updateCheckoutActionVisibility()
+}
+
 function scrollToSummary() {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
@@ -42,6 +59,7 @@ function observeCheckoutAction(element: HTMLElement | null) {
   }
 
   checkoutObserver.observe(element)
+  updateCheckoutActionVisibility(element)
 }
 
 onMounted(() => {
@@ -52,9 +70,10 @@ onMounted(() => {
 
     isCheckoutActionVisible.value = entry.isIntersecting
     hasCheckoutPosition.value = true
-  })
+  }, { threshold: 0.01 })
 
   observeCheckoutAction(checkoutAction.value)
+  window.addEventListener('resize', handleViewportResize)
 })
 
 watch(
@@ -72,6 +91,7 @@ watch(
 
 onBeforeUnmount(() => {
   checkoutObserver?.disconnect()
+  window.removeEventListener('resize', handleViewportResize)
 })
 
 useSeoMeta({
@@ -131,16 +151,16 @@ useSeoMeta({
 
         <div ref="checkoutAction">
           <VBtn
+            to="/checkout"
             color="primary"
             variant="flat"
             block
-            disabled
           >
             Оформити замовлення
           </VBtn>
         </div>
 
-        <p>Оформлення замовлення додамо наступним кроком.</p>
+        <p>Контактні дані та спосіб оплати заповнимо на наступному кроці.</p>
       </section>
     </template>
 
@@ -191,7 +211,7 @@ useSeoMeta({
 <style scoped>
 .cart-page {
   min-height: 100dvh;
-  padding: 28px var(--page-padding) 44px;
+  padding: 20px var(--page-padding) 44px;
 }
 
 .cart-page__header {

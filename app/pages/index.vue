@@ -49,7 +49,7 @@ const {
   gap: 28px;
 
   min-height: 100dvh;
-  padding: 40px var(--page-padding) var(--page-padding);
+  padding: 22px var(--page-padding) var(--page-padding);
 }
 
 .bestsellers {

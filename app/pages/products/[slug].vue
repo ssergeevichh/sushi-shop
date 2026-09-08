@@ -43,14 +43,6 @@ useSeoMeta({
 
 <template>
   <main class="product-page">
-    <NuxtLink class="product-page__back" to="/">
-      <svg aria-hidden="true" viewBox="0 0 24 24">
-        <path d="m15 18-6-6 6-6" />
-      </svg>
-
-      До меню
-    </NuxtLink>
-
     <article class="product-details">
       <div class="product-details__media">
         <VImg
@@ -175,39 +167,7 @@ useSeoMeta({
 <style scoped>
 .product-page {
   min-height: 100dvh;
-  padding: 24px var(--page-padding) 116px;
-}
-
-.product-page__back {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 18px;
-
-  color: var(--color-text-secondary);
-  font-size: 14px;
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.product-page__back:hover {
-  color: var(--color-primary);
-}
-
-.product-page__back:focus-visible {
-  outline: 3px solid rgb(255 116 87 / 24%);
-  outline-offset: 3px;
-}
-
-.product-page__back svg {
-  width: 20px;
-  height: 20px;
-
-  fill: none;
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 2;
+  padding: 16px var(--page-padding) 116px;
 }
 
 .product-details {

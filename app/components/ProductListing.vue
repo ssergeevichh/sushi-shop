@@ -25,14 +25,6 @@ const viewMode = useProductViewMode()
 
 <template>
   <main class="product-listing">
-    <NuxtLink class="product-listing__back" to="/">
-      <svg aria-hidden="true" viewBox="0 0 24 24">
-        <path d="m15 18-6-6 6-6" />
-      </svg>
-
-      На головну
-    </NuxtLink>
-
     <header class="product-listing__header">
       <h1>{{ props.title }}</h1>
 
@@ -93,38 +85,7 @@ const viewMode = useProductViewMode()
 <style scoped>
 .product-listing {
   min-height: 100dvh;
-  padding: 20px var(--page-padding) 40px;
-}
-
-.product-listing__back {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 16px;
-
-  color: var(--color-text-secondary);
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.product-listing__back:hover {
-  color: var(--color-primary);
-}
-
-.product-listing__back:focus-visible {
-  outline: 3px solid rgb(255 116 87 / 24%);
-  outline-offset: 3px;
-}
-
-.product-listing__back svg {
-  width: 20px;
-  height: 20px;
-
-  fill: none;
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 2;
+  padding: 16px var(--page-padding) 40px;
 }
 
 .product-listing__header {

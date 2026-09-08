@@ -3,15 +3,18 @@ const props = withDefaults(
   defineProps<{
     cartCount?: number
     cartOpen?: boolean
+    menuOpen?: boolean
   }>(),
   {
     cartCount: 0,
     cartOpen: false,
+    menuOpen: false,
   },
 )
 
 const emit = defineEmits<{
   openCart: []
+  openMenu: []
 }>()
 </script>
 
@@ -23,7 +26,10 @@ const emit = defineEmits<{
         type="button"
         icon
         variant="flat"
-        aria-label="Відкрити категорії"
+        aria-label="Відкрити меню"
+        aria-controls="app-navigation"
+        :aria-expanded="props.menuOpen"
+        @click="emit('openMenu')"
       >
         <svg
           aria-hidden="true"
@@ -46,26 +52,6 @@ const emit = defineEmits<{
     </NuxtLink>
 
     <div class="app-header__side app-header__side--end">
-      <VBtn
-        class="app-header__button"
-        type="button"
-        icon
-        variant="flat"
-        aria-label="Відкрити пошук"
-      >
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 24 24"
-        >
-          <circle
-            cx="11"
-            cy="11"
-            r="7"
-          />
-          <path d="m16 16 4 4" />
-        </svg>
-      </VBtn>
-
       <VBadge
         class="app-header__cart"
         :model-value="props.cartCount > 0"
@@ -139,7 +125,6 @@ const emit = defineEmits<{
 
 .app-header__side--end {
   justify-content: flex-end;
-  gap: 8px;
 }
 
 .app-header__logo {
@@ -249,10 +234,6 @@ const emit = defineEmits<{
 @media (max-width: 359px) {
   .app-header {
     padding-inline: 14px;
-  }
-
-  .app-header__side--end {
-    gap: 6px;
   }
 
   .app-header__button {
