@@ -11,12 +11,14 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.116.0",
     "nuxt": "^4.5.2",
     "vue": "^3.5.42",
     "vue-router": "^5.3.0",
     "vuetify-nuxt-module": "^1.0.0-rc.5"
   },
   "devDependencies": {
+    "supabase": "^2.117.0",
     "typescript": "^5.9.3",
     "vue-tsc": "^3.3.11",
     "vuetify": "^4.2.0"

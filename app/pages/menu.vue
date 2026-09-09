@@ -1,31 +1,34 @@
 <script setup lang="ts">
-import { categories } from '~/data/categories'
-import { products } from '~/data/products'
 import { getPositionsLabel } from '~/utils/formatters'
 
 const route = useRoute()
+const { categories, products } = useCatalog()
 const menuPage = ref<HTMLElement | null>(null)
 const quickNavigation = ref<HTMLElement | null>(null)
 const menuNavigation = ref<HTMLElement | null>(null)
 
-const menuSections = categories
-  .filter(category => category.id !== 'all')
-  .map(category => ({
-    category,
-    products: products.filter(product => product.categoryId === category.id),
-  }))
-  .filter(section => section.products.length > 0)
+const menuSections = computed(() => {
+  return categories.value
+    .filter(category => category.id !== 'all')
+    .map(category => ({
+      category,
+      products: products.value.filter(product => product.categoryId === category.id),
+    }))
+    .filter(section => section.products.length > 0)
+})
 
 const routeCategoryId = route.hash.replace('#', '')
-const initialCategoryId = menuSections.some(({ category }) => category.id === routeCategoryId)
+const initialCategoryId = menuSections.value.some(({ category }) => category.id === routeCategoryId)
   ? routeCategoryId
-  : menuSections[0]?.category.id ?? ''
+  : menuSections.value[0]?.category.id ?? ''
 
 const activeCategoryId = ref(initialCategoryId)
 const viewMode = useProductViewMode()
-const totalMenuItems = menuSections.reduce((total, section) => {
-  return total + section.products.length
-}, 0)
+const totalMenuItems = computed(() => {
+  return menuSections.value.reduce((total, section) => {
+    return total + section.products.length
+  }, 0)
+})
 
 let scrollFrame: number | undefined
 

@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import { categories } from '~/data/categories'
-import { products } from '~/data/products'
-
 const route = useRoute()
+const { categories, products } = useCatalog()
 const slug = Array.isArray(route.params.slug)
   ? route.params.slug[0]
   : route.params.slug
 
-const category = categories.find((item) => {
+const category = categories.value.find((item) => {
   return item.id !== 'all' && item.id === slug
 })
 
@@ -18,7 +16,7 @@ if (!category) {
   })
 }
 
-const categoryProducts = products.filter((product) => {
+const categoryProducts = products.value.filter((product) => {
   return product.categoryId === category.id
 })
 

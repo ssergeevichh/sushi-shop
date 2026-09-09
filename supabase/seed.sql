@@ -1,0 +1,2 @@
+-- Development-only test data can be added here later.
+-- The initial production catalog is deployed through a migration.

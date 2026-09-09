@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import { categories } from '~/data/categories'
-
 const isOpen = defineModel<boolean>({ default: false })
 const route = useRoute()
+const { categories } = useCatalog()
 
 const emit = defineEmits<{
   openDelivery: []
 }>()
 
 const menuCategories = computed(() => {
-  return categories.filter(category => category.id !== 'all')
+  return categories.value.filter(category => category.id !== 'all')
 })
 
 function closeNavigation() {

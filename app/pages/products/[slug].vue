@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { products } from '~/data/products'
-
 const route = useRoute()
+const { products } = useCatalog()
 const slug = Array.isArray(route.params.slug)
   ? route.params.slug[0]
   : route.params.slug
 
-const product = products.find(item => item.slug === slug)
+const product = products.value.find(item => item.slug === slug)
 
 if (!product) {
   throw createError({

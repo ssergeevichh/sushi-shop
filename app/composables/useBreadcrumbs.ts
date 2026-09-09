@@ -1,6 +1,4 @@
 import type { RouteLocationRaw } from 'vue-router'
-import { categories } from '~/data/categories'
-import { products } from '~/data/products'
 
 export interface BreadcrumbItem {
   title: string
@@ -13,6 +11,7 @@ function getRouteParam(value: string | string[] | undefined) {
 
 export function useBreadcrumbs() {
   const route = useRoute()
+  const { categories, products } = useCatalog()
 
   return computed<BreadcrumbItem[]>(() => {
     if (route.path === '/') {
@@ -42,7 +41,7 @@ export function useBreadcrumbs() {
 
     if (route.path.startsWith('/categories/')) {
       const categorySlug = getRouteParam(route.params.slug)
-      const category = categories.find(item => item.id === categorySlug)
+      const category = categories.value.find(item => item.id === categorySlug)
 
       return category
         ? [home, { title: category.name }]
@@ -51,13 +50,13 @@ export function useBreadcrumbs() {
 
     if (route.path.startsWith('/products/')) {
       const productSlug = getRouteParam(route.params.slug)
-      const product = products.find(item => item.slug === productSlug)
+      const product = products.value.find(item => item.slug === productSlug)
 
       if (!product) {
         return [home]
       }
 
-      const category = categories.find(item => item.id === product.categoryId)
+      const category = categories.value.find(item => item.id === product.categoryId)
       const breadcrumbs: BreadcrumbItem[] = [home]
 
       if (category) {

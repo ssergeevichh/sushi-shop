@@ -1,4 +1,3 @@
-import { products } from '~/data/products'
 import type { Product } from '~/types/product'
 
 export type CartQuantities = Record<string, number>
@@ -11,11 +10,12 @@ export interface CartItem {
 }
 
 export function useCart() {
+  const { products } = useCatalog()
   const quantities = useState<CartQuantities>('cart-quantities', () => ({}))
   const isReady = useState<boolean>('cart-is-ready', () => false)
 
   const cartItems = computed<CartItem[]>(() => {
-    return products.flatMap((product) => {
+    return products.value.flatMap((product) => {
       const quantity = getQuantity(product.id)
 
       if (quantity === 0) {

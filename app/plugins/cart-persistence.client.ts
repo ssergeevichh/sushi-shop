@@ -1,6 +1,6 @@
 import type { CartQuantities } from '~/composables/useCart'
 
-const CART_STORAGE_KEY = 'rollin-cart'
+const CART_STORAGE_KEY = 'rollin-cart-v2'
 
 function parseStoredCart(value: string): CartQuantities {
   const parsedValue: unknown = JSON.parse(value)

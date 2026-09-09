@@ -196,15 +196,14 @@ useSeoMeta({
         </svg>
       </div>
 
-      <p class="checkout-page__eyebrow">Демонстраційне замовлення</p>
+      <p class="checkout-page__eyebrow">Замовлення оформлено</p>
       <h1 id="order-result-title">Замовлення прийнято</h1>
       <p>
         Номер замовлення
         <strong>{{ submittedOrder.orderNumber }}</strong>
       </p>
       <p class="checkout-page__result-note">
-        Дані поки не зберігаються та не надсилаються ресторану. Наступним етапом
-        під’єднаємо Supabase.
+        Ми отримали твоє замовлення. Очікуй підтвердження від менеджера.
       </p>
 
       <VBtn to="/menu" color="primary" variant="flat" block>

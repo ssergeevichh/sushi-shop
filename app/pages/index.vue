@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { categories } from '~/data/categories'
-import { products } from '~/data/products'
-
 useSeoMeta({
   title: 'СУШІ ROLLIN’',
   description: 'Замовляйте свіжі роли та суші від ROLLIN’',
 })
 
-const bestsellers = products.filter(product => product.labels.includes('bestseller'))
+const { categories, products } = useCatalog()
+const bestsellers = computed(() => {
+  return products.value.filter(product => product.labels.includes('bestseller'))
+})
 
 const {
   getQuantity,
